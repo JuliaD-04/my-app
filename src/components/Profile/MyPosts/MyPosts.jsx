@@ -9,8 +9,10 @@ const MyPosts = (props) => {
     let newPostElement = React.createRef();
 
     let addPost = () => {
+        debugger;
         let text = newPostElement.current.value;
-        alert (text);
+        props.addPost(text);
+        newPostElement.current.value = '';
     }
 
     return (
@@ -26,7 +28,7 @@ const MyPosts = (props) => {
             </div>
             <div className={s.posts}>
                {postsElements}
-               <Post message={props.message} likesCount={props.likesCount} />
+               {/*<Post message={props.message} likesCount={props.likesCount} />*/}
             </div>
         </div>
 
