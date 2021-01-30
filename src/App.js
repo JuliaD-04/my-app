@@ -14,7 +14,7 @@ let someComponent = () => <Dialogs />
 
 
 const App = (props) => {
-
+    debugger;
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
