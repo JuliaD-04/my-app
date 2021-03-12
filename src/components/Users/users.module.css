@@ -5,3 +5,7 @@
 .selectedPage {
     font-weight: bold;
 }
+.preloader {
+    width: 150px;
+    height: 150px;
+}
