@@ -1,8 +1,6 @@
 import React from 'react';
 import './App.css';
-import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
-import Dialogs from "./components/Dialogs/Dialogs";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
@@ -10,17 +8,15 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import Route from "react-router-dom/es/Route";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
 
-
-//можно обернуть Dialogs в другую компоненту, или использовать render с анонимной функцией
-let someComponent = () => <Dialogs/>
 
 
 const App = (props) => {
     return (
         <div className='app-wrapper'>
-            <Header/>
-            <Navbar/>
+            <HeaderContainer />
+            <Navbar />
             <div className='app-wrapper-content'>
                 {/*<Route path='/dialogs' component={ someComponent }/>*/}
                 <Route path='/dialogs' render={ () => <DialogsContainer/>} />
