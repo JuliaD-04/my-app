@@ -28,18 +28,20 @@ const dialogsReducer = (state = initialState, action) => {
                 newMessageBody: action.body
             };
         case SEND_MESSAGE:
+            //мы берем предыдущее значение в newMessageBody
             let body = state.newMessageBody;
             return {
                 ...state,
+                //делаем чтобы поле осталось чистым
                 newMessageBody: '',
+                //копируем message и добавляем новое сообщение
                 messages: [...state.messages, {id: 6, message: body}]
             };
         default:
             return state;
-
     }
 }
-
+//action creatory (связаны с изменением в state???)
 export const sendMessageCreator = () => ({type: SEND_MESSAGE})
 export const updateNewMessageBodyCreator = (body) =>
     ({type: UPDATE_NEW_MESSAGE_BODY, body: body})

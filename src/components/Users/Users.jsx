@@ -3,70 +3,55 @@ import styles from "./users.module.css";
 import userPhoto from "../../assets/images/user.png";
 import {NavLink} from "react-router-dom";
 import * as axios from "axios";
+import {usersAPI} from "../../api/api";
+
 
 let Users = (props) => {
-
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
-
     let pages = [];
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
     }
-
     return <div>
         <div>
+            {/*это - нажатие по цифрам на страничке users*/}
             {pages.map(p => {
+                // выделенная или невыделенная цифра в списке цифр-страниц
                 return <span className={props.currentPage === p && styles.selectedPage}
+                    // p - это currentpage, мы отправляем в call-back функцию
                              onClick={(e) => {
-                                 props.onPageChanged(p)
+                                 props.onPageChanged(p);
                              }}>{p}</span>
             })}
         </div>
-        {
-            props.users.map(u => <div key={u.id}>
+        {props.users.map(u =>
+            <div key={u.id}>
             <span>
                 <div>
                     <NavLink to={'/profile/' + u.id}>
-                    <img src={u.photos.small != null ? u.photos.small : userPhoto} className={styles.userPhoto}/>
+                        {/*если есть фотка small, то берем ее, если нет то захаркодженную*/}
+                        <img src={u.photos.small != null ? u.photos.small : userPhoto} className={styles.userPhoto}/>
                     </NavLink>
-                    </div>
+                </div>
 
-{/*Подписка и отписка от пользователей*/}
+                {/*Follow и Unfollow пользователей*/}
                 <div>
                     {u.followed
-                        ? <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
-                            props.toggleFollowingProgress(true, u.id);
-                            axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
-                                withCredentials: true,
-                                headers: {
-                                    "API-KEY": "8b08a752-17ea-4da9-a24d-35058cc67ef8"
-                                }
-                            })
-                                .then(response => {
-                                    if (response.data.resultCode == 0) {
-                                        props.unfollow(u.id);
-                                    }
-                                    props.toggleFollowingProgress(false, u.id);
-                                });
-                        }}>Unfollow</button>
-                        : <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
-                            props.toggleFollowingProgress(true, u.id);
-                            axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
-                                withCredentials: true,
-                                headers: {
-                                    "API-KEY": "8b08a752-17ea-4da9-a24d-35058cc67ef8"
-                                }
-                            })
-                                .then(response => {
-                                    if (response.data.resultCode == 0) {
-                                        props.follow(u.id);
-                                    }
-                                    props.toggleFollowingProgress(false, u.id);
-                                });
-                        }}>Follow</button>
+                        ? <button disabled={props.followingInProgress
+                            .some(id => id === u.id)}
+                                  onClick={() => {
+                                      //props.unfollow - это санка unfollow из user-redusera
+                                      props.unfollow(u.id)
+                                  }}>Unfollow </button>
+                        : <button disabled={props.followingInProgress
+                            .some(id => id === u.id)}
+                                  onClick={() => {
+                                      //props.follow - это санка follow из user-redusera
+                                      props.follow(u.id)
+                                  }}>Follow</button>
                     }
                 </div>
-                {/*Подписка и отписка от пользователей*/}
+
             </span>
                 <span>
                     <span>

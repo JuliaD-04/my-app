@@ -6,6 +6,7 @@ const Profile = (props) => {
 
     return (
         <div>
+            {/*попадают пропсы из ProfileContainer*/}
             <ProfileInfo profile={props.profile}/>
             <MyPostsContainer />
         </div>
