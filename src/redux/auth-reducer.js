@@ -1,3 +1,5 @@
+import {autAPI} from "../api/api";
+
 const SET_USER_DATA = "SET_USER_DATA";
 
 let initialState = {
@@ -27,5 +29,18 @@ const authReducer = (state = initialState, action) => {
 //Со старта может придти 2 варианта: 1) ты залогинен, 2)нет
 // мы здесь создаем data и закидываем туда данные
 export const setAuthUserData = (id, email, login) => ({type: SET_USER_DATA, data: {id, email, login}})
+
+//санка
+export const getAuthUserData = () => (dispatch) => {
+    autAPI.me().then(response => {
+        //если запрос успешен, т.е. resultcode=0, значит ты залогинен!!!
+        //Значит тут есть твой id, login и email
+        if (response.data.resultCode === 0) {
+            let {id, login, email} = response.data.data;
+            dispatch(setAuthUserData(id, email, login));
+        }
+    });
+}
+
 
 export default authReducer;

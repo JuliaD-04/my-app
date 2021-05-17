@@ -11,31 +11,26 @@ const instance = axios.create({
 //для Users
 export const usersAPI = {
     getAllUsers(currentPage = 1, pageSize = 10) {
-        return instance.get(`/users?page=${currentPage}&count=${pageSize}`)
+        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
             .then(response => {
                 return response.data;
             });
     },
     follow(userId) {
-        return instance.post(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`)
+        return instance.post(`follow/${userId}`)
     },
     unfollow(userId) {
-        return instance.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`)
+        return instance.delete(`follow/${userId}`)
+    },
+    getProfile(userId) {
+        return instance.get(`profile/` + userId);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
+export const autAPI = {
+    me() {
+        return instance.get(`auth/me`)
+    }
+}
 
 
 //доделать с другими контейнерными компонентами
