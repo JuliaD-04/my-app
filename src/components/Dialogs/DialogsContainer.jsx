@@ -7,7 +7,8 @@ import {connect} from "react-redux";
 //приходит state полный из redux-store и мы берем свое по ключу
 let mapStateToProps = (state) => {
     return {
-        dialogsPage: state.dialogsPage
+        dialogsPage: state.dialogsPage,
+        isAuth: state.auth.isAuth
     }
 };
 //мы отправляем или создаем новое сообщение запуская actionCreatory с помощью call-back функций

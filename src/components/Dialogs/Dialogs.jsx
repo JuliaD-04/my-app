@@ -2,6 +2,8 @@ import React from "react";
 import s from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
+import Redirect from "react-router-dom/es/Redirect";
+
 
 
 const Dialogs = (props) => {
@@ -21,6 +23,10 @@ const Dialogs = (props) => {
         let body = e.target.value;
         props.onNewMessageChange(body)
     }
+
+    //проверить залогинен ли пользователь
+    //булевое значение не сравниваем с булевым, ставим !
+    if(!props.isAuth) return <Redirect to={"/login"}/>;
 
     //Разметка на странице диалогов
     return (

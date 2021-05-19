@@ -9,6 +9,7 @@ import Route from "react-router-dom/es/Route";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import LoginPage from "./components/Login/login";
 
 
 
@@ -25,6 +26,7 @@ const App = (props) => {
                 <Route path='/news' render={() => <News/>}/>
                 <Route path='/music' render={() => <Music/>}/>
                 <Route path='/settings' render={() => <Settings/>}/>
+                <Route path='/login' render={() => <LoginPage/>}/>
             </div>
         </div>
     );
