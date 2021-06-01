@@ -2,37 +2,51 @@ import React from "react";
 
 
 class ProfileStatus extends React.Component {
+
     state = {
-        editMode: false
+        editMode: false,
+        status: this.props.status
     }
     //мы объявляем метод с помощью синтаксиса стрелочной функции - не получилось
-    //поэтому пока просто методом классическим сделали с байндом
     activateEditMode = () => {
         //как изменить state - для этого есть метод из React.Component
         //в него мы должны передать объект,свойства которго перезапишут те свойства, которые были в state
         this.setState({
             editMode: true
-        })
+        });
     }
     deactivateEditMode = () => {
         this.setState({
             editMode: false
-        })
+        });
+        //мы отредактировали, новый статус появился в LS и мы его диспатчим в GS
+        this.props.updateStatus(this.state.status);
+    }
+    //мы узнаем какое новое значение статуса
+    onStatusChange = (e) => {
+        this.setState({
+            status: e.currentTarget.value
+        });
     }
 
     render() {
         return (
             <div>
+                {/*не true, не истина, false*/}
                 {!this.state.editMode &&
                     <div>
                         {/*при нажатии на текст отроется input, где мы сможем его отредактировать */}
-                        <span onDoubleClick={this.activateEditMode.bind(this)}>{this.props.status}</span>
+                        <span onDoubleClick={this.activateEditMode}>{this.props.status || "no status"}</span>
                     </div>
                 }
+                {/*true*/}
                 {this.state.editMode &&
                     <div>
                         {/*onBlur срабатывает, котгда фокус из элемента уходит*/}
-                        <input autoFocus={true} onBlur={this.deactivateEditMode.bind(this)} value={this.props.status}></input>
+                        <input onChange={this.onStatusChange} autoFocus={true}
+                               onBlur={this.deactivateEditMode}
+                               // показываем статус не из пропсов, а из стейта локального
+                               value={this.state.status} />
                     </div>
                 }
             </div>

@@ -23,21 +23,28 @@ export const usersAPI = {
         return instance.delete(`follow/${userId}`)
     },
     getProfile(userId) {
-        return instance.get(`profile/` + userId);
+        console.warn('Obsolete method please profileAPI object.')
+        return profileAPI.getProfile(userId);
     }
 }
+
+export const profileAPI = {
+    getProfile(userId) {
+        return instance.get(`profile/` + userId);
+    },
+    getStatus(userId){
+        return instance.get(`profile/status/` + userId);
+    },
+    updateStatus(status){
+        //мы отправляем на сервак объект у которго есть свойство - status
+        return instance.put(`profile/status/`, {status: status});
+    }
+}
+
 export const autAPI = {
     me() {
         return instance.get(`auth/me`)
     }
 }
 
-
-//доделать с другими контейнерными компонентами
-// export const getUsers2 = (currentPage = 1, pageSize = 10) => {
-//     return instance.get(`/follow?page=${currentPage}&count=${pageSize}`)
-//         .then(response => {
-//             return response.data;
-//         });
-// }
 
