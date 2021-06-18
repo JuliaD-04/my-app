@@ -30,6 +30,7 @@ class ProfileStatus extends React.Component {
     }
     //в метод приходят старые пропсы и старый стейт
     componentDidUpdate(prevProps, prevState) {
+        //если статус пришел и он е равен этому то засинхронизируй стейт
         if (prevProps.status !== this.props.status){
             this.setState({
                 status: this.props.status

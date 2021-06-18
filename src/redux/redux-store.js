@@ -6,6 +6,7 @@ import usersReducer from "./users-reducer";
 import authReducer from "./auth-reducer";
 //мы импортируем промежуточный уровень, который мы внедряем в свой store
 import thunkMiddleware from "redux-thunk";
+import { reducer as formReducer } from 'redux-form'
 
 
 //склеиваем редьюсеры (это и есть state, отсюда и идут все props)
@@ -16,7 +17,9 @@ let reducers = combineReducers({
     dialogsPage: dialogsReducer,
     sidebar: sidebarReducer,
     usersPage: usersReducer,
-    auth: authReducer
+    auth: authReducer,
+    form: formReducer
+
 });
 
 let store = createStore(reducers, applyMiddleware(thunkMiddleware));
