@@ -2,6 +2,7 @@ import React from "react";
 import s from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
+import {Field, reduxForm} from "redux-form";
 
 
 const Dialogs = (props) => {
@@ -12,14 +13,11 @@ const Dialogs = (props) => {
     let newMessageBody = props.dialogsPage.newMessageBody;
 
     //Call-back функции
-    //функция отправки сообщения и запускается здесь!
-    let onSendMessageClick = () => {
-        props.onSendMessageClick();
-    }
-    //функция передачи самого текста сообщения и запускается здесь!
-    let onNewMessageChange = (e) => {
-        let body = e.target.value;
-        props.onNewMessageChange(body)
+    //в values - объект
+    let addNewMessage = (values) => {
+        //onSendMessageClick-этот колбэк, который к нам приходит из DialogsContainer
+        //функция отправки сообщения и запускается здесь!
+        props.onSendMessageClick(values.newMessageBody);
     }
 
     //Разметка на странице диалогов
@@ -30,19 +28,23 @@ const Dialogs = (props) => {
             </div>
             <div className={s.messages}>
                 <div>{messagesElements}</div>
-                <div>
-                    <div>
-                        <textarea value={newMessageBody}
-                                  placeholder='Enter your message'
-                                  onChange={onNewMessageChange}>
-                        </textarea>
-                    </div>
-                    <div>
-                        <button onClick={onSendMessageClick}>Send</button>
-                    </div>
-                </div>
             </div>
+            {/*когда форма засобмитилась она вызовет функцию addNewMessage*/}
+            <AddMessageFormRedux onSubmit={addNewMessage} />
         </div>
     );
 }
+
+//Задача формы просто собирать данные и отправлять их в HandleSubmit
+const AddMessageForm = (props) => {
+    return (
+        <form onSubmit ={props.handleSubmit}>
+            <Field component={'textarea'} name='newMessageBody' placeholder='Enter your message' />
+            <div><button>Send</button></div>
+        </form>
+    )
+}
+//Эта форма будет называться "dialogsAddMessageForm"
+const AddMessageFormRedux = reduxForm({form: 'dialogsAddMessageForm'})(AddMessageForm);
+
 export default Dialogs;

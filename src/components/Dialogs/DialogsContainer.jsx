@@ -1,5 +1,5 @@
 import React from "react";
-import {sendMessageCreator, updateNewMessageBodyCreator} from "../../redux/dialogs-reducer";
+import {sendMessageCreator} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
@@ -16,11 +16,8 @@ let mapStateToProps = (state) => {
 //мы отправляем или создаем новое сообщение запуская actionCreatory с помощью call-back функций
 let mapDispatchToProps = (dispatch) => {
     return {
-        onSendMessageClick: () => {
-            dispatch(sendMessageCreator());
-        },
-        onNewMessageChange: (body) => {
-            dispatch(updateNewMessageBodyCreator(body));
+        onSendMessageClick: (newMessageBody) => {
+            dispatch(sendMessageCreator(newMessageBody));
         }
     }
 }
